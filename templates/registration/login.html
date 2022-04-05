@@ -1,33 +1,44 @@
 {% extends "base.html" %}
 
 {% block media %}
-    <style>
-        h4 {
-            padding-top: 1em;
-        }
+<style>
+    h4 {
+        padding-top: 1em;
+    }
 
-        .social {
-            display: inline;
-            font-size: 2.3em;
-            float: none;
-        }
+    .social {
+        display: inline;
+        font-size: 2.3em;
+    }
 
-        .google-icon i {
-            color: #DD4B38;
-        }
+    .google-icon i {
+        color: #DD4B38;
+    }
 
-        .facebook-icon i {
-            color: #133783;
-        }
+    .facebook-icon i {
+        color: #133783;
+    }
 
-        .github-icon i {
-            color: black;
-        }
-    </style>
+    .github-icon i {
+        color: black;
+    }
+
+    .login-form{
+        width: calc(213.2px + 4em); 
+        margin: auto;
+        padding: 2em;
+        background: #f0f0f0;
+        border-radius: 1em;
+    }
+    .login-button:hover{
+        background: #86A4BF !important;
+    }
+
+</style>
 {% endblock %}
 
 {% block body %}
-    <div class="auth-flow-form">
+<!-- <div class="auth-flow-form">
         <form action="" method="post" class="form-area">
             {% csrf_token %}
             {% if form.errors %}
@@ -72,14 +83,53 @@
                 {% if form.has_facebook_auth %}
                     <a href="{{ url('social:begin', "facebook") }}?next={{ next }}" class="social facebook-icon">
                         <i class="fa fa-facebook-square"></i>
-                    </a>
+                    </a>https://github.com/buianhduc/OJhttps://githubhttps://github.com/buianhduc/OJdsV.com/buianhduc/OJ
                 {% endif %}
-                {% if form.has_github_auth %}
+                 {% if form.has_github_auth %}
                     <a href="{{ url('social:begin', "github-secure") }}?next={{ next }}" class="social github-icon">
                         <i class="fa fa-github-square"></i>
                     </a>
                 {% endif %}
             </div>
         {% endif %}
-    </div>
+        
+    </div> -->
+<div class="login-form">
+    <form action="" method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+        <div id="form-errors" style="max-width: fit-content;">
+            <p class="error">{{ _('Invalid username or password.') }}</p>
+            {% for error in form.non_field_errors() %}
+            <p class="error">{{error}}</p>
+            {% endfor %}
+            <!-- {% if form.errors and misc_config.discord_invite_link and misc_config.discord_invite_shieldio %}
+            {{ _('If you have problems with your account, feel free to shoot us a message at: ') }} -->
+            <a href="{{ misc_config.discord_invite_link }}"><img src="{{ misc_config.discord_invite_shieldio }}"></a>
+            <!-- {% endif %} -->
+        </div>
+        {% endif %}
+        <!-- Username input -->
+        <div class="form-outline mb-4">
+            <!-- <input type="text" id="form1Example1" class="form-control" />
+              <label class="form-label" for="form1Example1">Username</label> -->
+            <input type="text" name="username" autofocus="" placeholder="Username" required="" id="id_username"
+                class="placeholder-active">
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <!-- <input type="password" id="form1Example2" class="form-control" />
+              <label class="form-label" for="form1Example2">Password</label> -->
+            <input type="password" name="password" placeholder="Password" required="" id="id_password"
+                class="placeholder-active">
+        </div>
+
+        <a href="{{ url('password_reset') }}" style="display:block; text-align: center;">{{ _('Forgot your password?') }}</a>
+
+        <!-- Submit button -->
+        <button type="submit" style="background: #ACD2F5; color: black !important; border-radius: 3px; margin: auto;" class="login-button">{{ _('Login!') }}</button>
+        <!-- <input type="hidden" name="next" value="{{ next }}">           -->
+    </form>
+</div>
 {% endblock %}
